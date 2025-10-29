@@ -21,33 +21,45 @@ const data = [
 
 export const ActivityChart = () => {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>User Activity (24h)</CardTitle>
+    <Card className="border-border/50 bg-card/50 backdrop-blur-sm hover:shadow-xl transition-all duration-300 animate-fade-in">
+      <CardHeader className="border-b border-border/50">
+        <CardTitle className="text-xl font-semibold">User Activity (24h)</CardTitle>
+        <p className="text-sm text-muted-foreground">Active users throughout the day</p>
       </CardHeader>
-      <CardContent>
-        <ResponsiveContainer width="100%" height={250}>
-          <AreaChart data={data}>
+      <CardContent className="pt-6">
+        <ResponsiveContainer width="100%" height={270}>
+          <AreaChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
             <defs>
               <linearGradient id="colorUsers" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="hsl(var(--accent))" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="hsl(var(--accent))" stopOpacity={0} />
+                <stop offset="5%" stopColor="hsl(var(--accent))" stopOpacity={0.6} />
+                <stop offset="95%" stopColor="hsl(var(--accent))" stopOpacity={0.05} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
-            <XAxis dataKey="time" className="text-xs" />
-            <YAxis className="text-xs" />
+            <CartesianGrid strokeDasharray="3 3" className="stroke-border/30" vertical={false} />
+            <XAxis 
+              dataKey="time" 
+              className="text-xs"
+              stroke="hsl(var(--muted-foreground))"
+              tick={{ fill: 'hsl(var(--muted-foreground))' }}
+            />
+            <YAxis 
+              className="text-xs"
+              stroke="hsl(var(--muted-foreground))"
+              tick={{ fill: 'hsl(var(--muted-foreground))' }}
+            />
             <Tooltip
               contentStyle={{
                 backgroundColor: "hsl(var(--card))",
                 border: "1px solid hsl(var(--border))",
                 borderRadius: "var(--radius)",
+                boxShadow: "0 4px 12px hsl(var(--primary) / 0.1)",
               }}
             />
             <Area
               type="monotone"
               dataKey="users"
               stroke="hsl(var(--accent))"
+              strokeWidth={3}
               fillOpacity={1}
               fill="url(#colorUsers)"
             />

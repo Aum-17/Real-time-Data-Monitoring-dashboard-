@@ -29,11 +29,12 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background p-4 sm:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5 p-4 sm:p-6 lg:p-8">
+      <div className="max-w-7xl mx-auto relative">
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
         <DashboardHeader />
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-6">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8 relative">
           <MetricCard
             title="Total Revenue"
             value={metrics.revenue}
@@ -66,14 +67,18 @@ const Index = () => {
           />
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 mb-6">
+        <div className="grid gap-6 md:grid-cols-2 mb-8 relative">
           <RevenueChart />
           <SalesChart />
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2 relative">
           <ActivityChart />
           <ActivityChart />
+        </div>
+        
+        <div className="mt-12 text-center text-sm text-muted-foreground">
+          <p>Last updated: {new Date().toLocaleTimeString()} • Data refreshes every 3 seconds</p>
         </div>
       </div>
     </div>

@@ -21,26 +21,57 @@ const data = [
 
 export const SalesChart = () => {
   return (
-    <Card className="col-span-full lg:col-span-2">
-      <CardHeader>
-        <CardTitle>Sales by Category</CardTitle>
+    <Card className="col-span-full lg:col-span-2 border-border/50 bg-card/50 backdrop-blur-sm hover:shadow-xl transition-all duration-300 animate-fade-in">
+      <CardHeader className="border-b border-border/50">
+        <CardTitle className="text-xl font-semibold">Sales by Category</CardTitle>
+        <p className="text-sm text-muted-foreground">Performance vs targets across categories</p>
       </CardHeader>
-      <CardContent>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
-            <XAxis dataKey="category" className="text-xs" />
-            <YAxis className="text-xs" />
+      <CardContent className="pt-6">
+        <ResponsiveContainer width="100%" height={320}>
+          <BarChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+            <defs>
+              <linearGradient id="salesGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity={1}/>
+                <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity={0.7}/>
+              </linearGradient>
+              <linearGradient id="targetGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="hsl(var(--secondary))" stopOpacity={1}/>
+                <stop offset="100%" stopColor="hsl(var(--secondary))" stopOpacity={0.7}/>
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" className="stroke-border/30" vertical={false} />
+            <XAxis 
+              dataKey="category" 
+              className="text-xs"
+              stroke="hsl(var(--muted-foreground))"
+              tick={{ fill: 'hsl(var(--muted-foreground))' }}
+            />
+            <YAxis 
+              className="text-xs"
+              stroke="hsl(var(--muted-foreground))"
+              tick={{ fill: 'hsl(var(--muted-foreground))' }}
+            />
             <Tooltip
               contentStyle={{
                 backgroundColor: "hsl(var(--card))",
                 border: "1px solid hsl(var(--border))",
                 borderRadius: "var(--radius)",
+                boxShadow: "0 4px 12px hsl(var(--primary) / 0.1)",
               }}
             />
-            <Legend />
-            <Bar dataKey="sales" fill="hsl(var(--primary))" name="Actual Sales" />
-            <Bar dataKey="target" fill="hsl(var(--secondary))" name="Target" />
+            <Legend wrapperStyle={{ paddingTop: '20px' }} />
+            <Bar 
+              dataKey="sales" 
+              fill="url(#salesGradient)" 
+              name="Actual Sales"
+              radius={[8, 8, 0, 0]}
+            />
+            <Bar 
+              dataKey="target" 
+              fill="url(#targetGradient)" 
+              name="Target"
+              radius={[8, 8, 0, 0]}
+            />
           </BarChart>
         </ResponsiveContainer>
       </CardContent>

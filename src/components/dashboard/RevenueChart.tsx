@@ -27,37 +27,62 @@ const data = [
 
 export const RevenueChart = () => {
   return (
-    <Card className="col-span-full lg:col-span-2">
-      <CardHeader>
-        <CardTitle>Revenue & Profit Trends</CardTitle>
+    <Card className="col-span-full lg:col-span-2 border-border/50 bg-card/50 backdrop-blur-sm hover:shadow-xl transition-all duration-300 animate-fade-in">
+      <CardHeader className="border-b border-border/50">
+        <CardTitle className="text-xl font-semibold">Revenue & Profit Trends</CardTitle>
+        <p className="text-sm text-muted-foreground">Year-over-year performance comparison</p>
       </CardHeader>
-      <CardContent>
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
-            <XAxis dataKey="month" className="text-xs" />
-            <YAxis className="text-xs" />
+      <CardContent className="pt-6">
+        <ResponsiveContainer width="100%" height={320}>
+          <LineChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+            <defs>
+              <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.1}/>
+                <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0}/>
+              </linearGradient>
+              <linearGradient id="profitGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="hsl(var(--accent))" stopOpacity={0.1}/>
+                <stop offset="95%" stopColor="hsl(var(--accent))" stopOpacity={0}/>
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" className="stroke-border/30" vertical={false} />
+            <XAxis 
+              dataKey="month" 
+              className="text-xs" 
+              stroke="hsl(var(--muted-foreground))"
+              tick={{ fill: 'hsl(var(--muted-foreground))' }}
+            />
+            <YAxis 
+              className="text-xs"
+              stroke="hsl(var(--muted-foreground))"
+              tick={{ fill: 'hsl(var(--muted-foreground))' }}
+            />
             <Tooltip
               contentStyle={{
                 backgroundColor: "hsl(var(--card))",
                 border: "1px solid hsl(var(--border))",
                 borderRadius: "var(--radius)",
+                boxShadow: "0 4px 12px hsl(var(--primary) / 0.1)",
               }}
             />
-            <Legend />
+            <Legend wrapperStyle={{ paddingTop: '20px' }} />
             <Line
               type="monotone"
               dataKey="revenue"
               stroke="hsl(var(--primary))"
-              strokeWidth={2}
+              strokeWidth={3}
               name="Revenue"
+              dot={{ fill: 'hsl(var(--primary))', strokeWidth: 2, r: 4 }}
+              activeDot={{ r: 6, strokeWidth: 2 }}
             />
             <Line
               type="monotone"
               dataKey="profit"
               stroke="hsl(var(--accent))"
-              strokeWidth={2}
+              strokeWidth={3}
               name="Profit"
+              dot={{ fill: 'hsl(var(--accent))', strokeWidth: 2, r: 4 }}
+              activeDot={{ r: 6, strokeWidth: 2 }}
             />
           </LineChart>
         </ResponsiveContainer>

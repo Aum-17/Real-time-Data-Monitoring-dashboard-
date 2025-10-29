@@ -44,6 +44,12 @@ All colors MUST be HSL.
 
     --radius: 0.75rem;
 
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--primary)) 100%);
+    --shadow-soft: 0 2px 8px -2px hsl(var(--primary) / 0.1);
+    --shadow-medium: 0 8px 24px -4px hsl(var(--primary) / 0.15);
+    --shadow-glow: 0 0 32px hsl(var(--primary) / 0.2);
+
     --chart-1: 210 80% 48%;
     --chart-2: 175 60% 48%;
     --chart-3: 145 65% 48%;

@@ -41,35 +41,42 @@ export const MetricCard = ({
   }, [value]);
 
   const colorClasses = {
-    primary: "bg-primary/10 text-primary",
-    success: "bg-success/10 text-success",
-    warning: "bg-warning/10 text-warning",
-    destructive: "bg-destructive/10 text-destructive",
+    primary: "bg-gradient-to-br from-primary/20 to-primary/10 text-primary",
+    success: "bg-gradient-to-br from-success/20 to-success/10 text-success",
+    warning: "bg-gradient-to-br from-warning/20 to-warning/10 text-warning",
+    destructive: "bg-gradient-to-br from-destructive/20 to-destructive/10 text-destructive",
   };
 
   return (
-    <Card className="transition-all hover:shadow-lg">
-      <CardHeader className="flex flex-row items-center justify-between pb-2">
+    <Card className="group relative overflow-hidden border-border/50 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:scale-[1.02] animate-fade-in">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      
+      <CardHeader className="flex flex-row items-center justify-between pb-2 relative">
         <CardTitle className="text-sm font-medium text-muted-foreground">
           {title}
         </CardTitle>
-        <div className={`rounded-lg p-2 ${colorClasses[color]}`}>
-          <Icon className="h-4 w-4" />
+        <div className={`rounded-xl p-3 ${colorClasses[color]} shadow-sm transition-transform duration-300 group-hover:scale-110`}>
+          <Icon className="h-5 w-5" />
         </div>
       </CardHeader>
-      <CardContent>
-        <div className="text-3xl font-bold">
+      <CardContent className="relative">
+        <div className="text-4xl font-bold bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent">
           {displayValue.toLocaleString()}
           {unit}
         </div>
         {trend !== undefined && (
-          <p
-            className={`text-xs mt-1 ${
-              trend >= 0 ? "text-success" : "text-destructive"
-            }`}
-          >
-            {trend >= 0 ? "↑" : "↓"} {Math.abs(trend)}% from last period
-          </p>
+          <div className="flex items-center gap-1 mt-2">
+            <span
+              className={`inline-flex items-center gap-1 text-sm font-medium px-2 py-0.5 rounded-full ${
+                trend >= 0 
+                  ? "bg-success/10 text-success" 
+                  : "bg-destructive/10 text-destructive"
+              }`}
+            >
+              {trend >= 0 ? "↑" : "↓"} {Math.abs(trend)}%
+            </span>
+            <span className="text-xs text-muted-foreground">vs last period</span>
+          </div>
         )}
       </CardContent>
     </Card>
